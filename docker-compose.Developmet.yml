@@ -1,0 +1,36 @@
+﻿version: '3.8'
+
+services:
+  app_db:
+    container_name: 'app_db__dev'
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    networks:
+      - default_network
+
+  app:
+    container_name: 'app'
+    image: 'app__dev'
+    environment:
+      ASPNETCORE_ENVIRONMENT: 'Development'
+      PORT: 7234
+      ConnectionStrings:IdentityDb: 'Host=app_db__dev;Port=5432;Database=Postgres;Username=postgres;Password=postgres'
+    build:
+      context: .
+      dockerfile: PRDSDS.API/Dockerfile
+    ports:
+      - '5006:80'
+      - '7234:7234'
+      - '3000:3000'
+    depends_on:
+      - 'app_db'
+    networks:
+      - default_network
+
+networks:
+  default_network:
+    driver: bridge
