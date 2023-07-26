@@ -16,7 +16,7 @@ public class AppDbContext: DbContext
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(_configuration.GetConnectionString("AppDB"));
+        optionsBuilder.UseNpgsql(_configuration["ConnectionStrings:AppDB"]);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

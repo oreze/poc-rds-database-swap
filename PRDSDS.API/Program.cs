@@ -14,19 +14,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>();
 
-builder.Services.AddOptions<UserManagementOptions>().BindConfiguration("UserManagement");
-
-builder.Configuration.AddSecretsManager(new BasicAWSCredentials(), 
-    RegionEndpoint.EUWest1, 
-    configurator: config =>
-        {
-            config.PollingInterval = TimeSpan.FromDays(1);
-        });
+builder.Configuration.AddUserSecrets<Program>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Debug")
 {
     app.UseSwagger();
     app.UseSwaggerUI();
