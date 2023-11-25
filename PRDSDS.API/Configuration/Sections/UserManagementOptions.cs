@@ -1,11 +1,11 @@
 ﻿namespace PRDSDS.API.Configuration.Sections;
 
 public class UserManagementOptions {
-    public string RowPerPage {
+    public string? RowPerPage {
         get;
         set;
     }
-    public string ApiKey {
+    public string? ApiKey {
         get;
         set;
     }
