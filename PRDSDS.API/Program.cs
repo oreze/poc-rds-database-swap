@@ -13,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddHealthChecks();
 
 builder.Configuration.AddUserSecrets<Program>();
 
@@ -30,5 +31,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks(Path.Combine("/", app.Configuration["HealthCheckEndpoint"]));
 
 app.Run();
